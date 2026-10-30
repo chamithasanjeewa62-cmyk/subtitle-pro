@@ -2,19 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Monetag Money Code - Zone 303628 -->
+<script src="https://quge5.com/88/tag.min.js" data-zone="303628" async data-cfasync="false"></script>
+
 <title>Subtitle Pro - Premium</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-<!-- Monetag Ads - Money Code - START - DO NOT DELETE -->
-<script src="https://3nbf4.com/act/files/tag.js?r=sw&zoneId=12154337" data-cfasync="false" async></script>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(()=>console.log('Ads Ready'));
-  }
-</script>
-<!-- Monetag Ads - END -->
-
 <style>
 :root{--bg:#080b14;--card:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.1)}
 *{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:#f5f7ff;font-family:Inter,sans-serif}
@@ -40,6 +34,7 @@ select,button{width:100%;padding:11px;border-radius:10px;border:1px solid var(--
 .movie{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer}
 .poster{aspect-ratio:2/3;width:100%;object-fit:cover}
 .movie-info{padding:10px}.rating{background:#f5c518;color:#000;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px}
+/* MODAL PREMIUM */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(24px);z-index:100;display:none;place-items:center;padding:20px}
 .modal-overlay.active{display:grid}
 .modal{width:100%;max-width:850px;background:#141a2e;border:1px solid rgba(255,255,255,0.12);border-radius:24px;overflow:hidden;animation:pop .35s cubic-bezier(.34,1.56,.64,1)}
@@ -72,6 +67,7 @@ select,button{width:100%;padding:11px;border-radius:10px;border:1px solid var(--
 <div class="chips"><div class="chip active" data-type="upcoming">Upcoming</div><div class="chip" data-type="popular">Popular</div><div class="chip" data-type="top_rated">Top IMDb</div><div class="chip" data-genre="28">Action</div><div class="chip" data-genre="27">Horror</div><div class="chip" data-genre="35">Comedy</div></div></div>
 <h2 id="sectionTitle">Upcoming Movies</h2><div class="movies" id="movies" style="margin-top:14px"></div>
 </main>
+
 <div class="modal-overlay" id="modalOverlay">
 <div class="modal">
 <div class="modal-banner">
@@ -87,6 +83,7 @@ select,button{width:100%;padding:11px;border-radius:10px;border:1px solid var(--
 </div>
 </div>
 </div>
+
 <script>
 const API_KEY='3e931d5679569246e96918302b26fdfc';
 const fileInput=document.getElementById('fileInput'),drop=document.getElementById('drop'),fname=document.getElementById('fname'),btn=document.getElementById('btn'),bar=document.getElementById('bar'),fill=document.getElementById('fill'),logEl=document.getElementById('log'),mainContent=document.getElementById('mainContent'),modalOverlay=document.getElementById('modalOverlay'),moviesEl=document.getElementById('movies'),searchInput=document.getElementById('searchInput'),trailerWrap=document.getElementById('trailerWrap'),playBtn=document.getElementById('playBtn'),modalBackdrop=document.getElementById('modalBackdrop');
@@ -97,6 +94,7 @@ function loadFile(f){fname.textContent=f.name;const r=new FileReader();r.onload=
 function parseSRT(d){d=d.replace(/\r/g,'').trim();const b=d.split(/\n\n+/);const o=[];for(let x of b){let l=x.split('\n');let t='',c='';if(l[0].includes('-->')){t=l[0];c=l.slice(1).join('\n');}else if(l[1]?.includes('-->')){t=l[1];c=l.slice(2).join('\n');}else continue;if(c)o.push({id:o.length+1,time:t,content:c});}return o;}
 async function translateOne(text,from,to){try{const r=await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`);const j=await r.json();return j[0][0][0]||text;}catch{return text;}}
 btn.onclick=async()=>{const from=document.getElementById('from').value,to=document.getElementById('to').value;bar.style.display='block';btn.disabled=true;let res=new Array(parsed.length);let done=0;for(let i=0;i<parsed.length;i+=8){const batch=parsed.slice(i,i+8);await Promise.all(batch.map(async (it,idx)=>{const ri=i+idx;res[ri]={...it,content:await translateOne(it.content,from,to)};done++;fill.style.width=Math.round(done/parsed.length*100)+'%';showLog(`${done}/${parsed.length} - ${Math.round(done/parsed.length*100)}%`);}));}const final=res.map(r=>`${r.id}\n${r.time}\n${r.content}`).join('\n\n');const blob=new Blob([final],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${to}_translated.srt`;a.click();showLog('Done! Check Downloads');bar.style.display='none';btn.disabled=false;}
+
 async function fetchMovies(url,title){
  document.getElementById('sectionTitle').textContent=title; moviesEl.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:#939bb3">Loading...</div>';
  const r=await fetch(url); const d=await r.json();
